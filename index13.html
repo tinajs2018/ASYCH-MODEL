@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch promises</title>
+</head>
+<body>
+  <script>
+   //Define  the function to feth a file and return it in astable form
+   function fetchAndDecode(url ,type) {
+    return fetch(url).then(response=>{
+      //depending on what type of file is  fetched use relavant  functions  
+      //to decode it
+      if(!response.ok){
+          throw new error (`http error status :${response.status}`);
+
+      }else{
+          if(type==='blob'){
+              return response.blob();
+          }else if(type==='text'){
+              return response.text()
+          }
+      }
+    }) 
+    .catch(e=>{
+        console.log(`there is error "${url}":` +e.message);
+    }) ; 
+   } 
+   //call the fetctAndDecode() method to fetch the images and the text
+   let house1=fetchAndDecode('source/img1.jpg','blob');
+   let tea= fetchAndDecode('img3.jpg','blob');
+   let dep=fetchAndDecode('img4.jpg','text');
+   //use the Promise.all()  to run the code  only when three function calls have been solved
+   Promise.all([house1,tea,dep]).then(values=>{
+       console.log(values);
+       //store each value returned from the promise in separate variable; create object url fromthe blobs
+       let objectURL1=URL.createObjectURL(values[0]);
+       let objectURL2=URL.createObjectURL(values[1]);
+       let descText=values[2];
+       //display the images in img elements
+       let image1=document.createElement('img');
+       let image2=document.createElement('img');
+       image1.src=objectURL1;
+       image2.src=objectURL2;
+       document.body.appendChild(image1);
+        document.body.appendChild(image2);
+       //display the text  in the paragraph
+       let para=document.createElement('p')
+       para.textContent=descText;
+       document.body.append(para);
+   });
+  </script>  
+</body>
+</html>

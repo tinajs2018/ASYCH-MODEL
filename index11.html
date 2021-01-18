@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple fetch method</title>
+</head>
+<body>
+  <script>
+    //call the fetch method to fetch the image and store it as variable
+    let promise=fetch('coffee.jpg')  ;
+    //use the then() block to respond tothe promise succefull completion
+    //by taking the returned and running blob() tp transform it into blob();
+    let promise2=promise.then(response=>{
+        //the promise fetch() does not reject the https erros
+        //so we need to check the boolean response.ok and throw  manually a new error
+        //() for the promise2 to be rejected (eg when 404 errors are found)
+        if(!response.ok){
+           throw new error(`http eror!${response.status}`);
+        }else{
+            return response.blob();
+        }
+    });
+    //blob( ) also returns a promise; when completely 
+    //suceefull it return a blob object in it call back
+    let promise3=promise2.then(myBlob=>{
+        //create an object url that points to the blob object
+        let objectURL=URL.createObjectURL(myBlob);
+        //create an image element to display the blob (image)
+        let image=document.createElement('img');
+        //set the src of the image to be the object url so the image to display
+        image .src=objectURL;
+        //append the image element to the dom
+        document.body.appendChild(image);
+    });
+  </script>  
+</body>
+</html>

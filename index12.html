@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    <p>This is my page</p>
+    <script>
+let a =fetch(source/img1.jpg);
+let b=fetch(source/img3.jpg);
+let c=fetch(source/img4.jpg);
+Promise.all([a,b,c]).then(values=>{
+
+});
+function fetchAndDecode(url,type){
+    return fetch(url).then(
+        response=>{
+            if(!response.ok){
+                throw new error(`https error status:${response}`);
+            }else{
+                if(type==='blob'){
+                    return response.blob();
+                }else if(type==='text'){
+                    return response.text();
+                }
+            }
+        })
+        .catch(e=>{
+            console.log(`There has been a problem with the fetch "${url}":`+e.message);
+        });
+}
+
+    </script>
+  </body>
+</html>

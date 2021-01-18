@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises</title>
+</head>
+<body>
+   
+    <script>
+       function handleCallButton(evt) {
+           setStatusMesssage('calling.....');
+           navigator.mediaDevices.getUserMedia({video:true,audio:true})
+           .then(chatStream=>{
+               selfViewElem.srcObject=chatStream;
+               chatStream.getTracks().forEach(tracks=>mypeerConnection.addTrack(track,chatStream));
+setStatusMesssage('Connected');
+           }).catch(err=>{
+               setStatusMesssage("Failed connection")
+           });
+       }
+    </script>
+</body>
+</html>

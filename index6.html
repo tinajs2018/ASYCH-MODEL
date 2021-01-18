@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greating app</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+        form{
+            width: 300px;
+        }
+        div{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        button{
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+ <h1>Welcome remarks as you enter muranga university of technology</h1> 
+ <form action="">
+     <div>
+         <label for="name"> PLease enter your name</label>
+         <input type="name" id="name" required>
+     </div>
+     <div>
+     <button class="greet">Welcome</button>
+    </div>
+ </form> 
+ <p><button class="cancel">Cancel the Greating</button></p> 
+ <script>
+     //store references to the button  form and input elements
+     const form=document.querySelector('form');
+     const nameInput=document.querySelector('name');
+     const greetBtn=document.querySelector('.greet');
+     const cancelBtn=document.querySelector('.cancel');
+     //dispable the cancel button for now so it can't do anything
+     //if the greating is not aready in progress
+     cancelBtn.disabled=true;
+     //define our greating function
+     function sayHi(who){
+         alert('welcome to muranga univeristy of technology' + who+'!');
+         //dispable the cancel button one of the fgreatings has been shown
+         cancelBtn.disabled=true;
+     }
+     //creat aglobal variable that will act as our
+      //setTimeout reference
+      let myGreeting;
+      form.addEventListener('submit',(e)=>{
+          //then we prevent the form from submitting
+          e.preventDefault();
+          //Enable the cancel button
+          cancelBtn.disabled=true;
+         //set the timeout to great the name enterd  in the input
+         myGreeting = setTimeout(sayHi, 5000, nameInput.value);
+      });
+      //add the event lister to cancel button to cancel the greatings
+      cancelBtn.addEventListener('click',()=>{
+clearInterval(myGreeting);
+//disable the cancel button again
+cancelBtn.disabled=true;
+console.log('you are not authorized')
+      });
+ </script>
+</body>
+</html>
